@@ -6,9 +6,15 @@
 </head>
 <body>
 	<div id="container">
-		<a vbind:class="cls" v-bind:href="url">
-			<img v-bind:src="img" alt="">
-		</a>
+		<label for="">
+			男
+			<input type="radio" v-model="sex" value="male">
+		</label>
+		<label for="">
+			女
+			<input type="radio" v-model="sex" value="female">
+		</label>
+		{{sex}}
 	</div>
 
 
