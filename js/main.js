@@ -18,7 +18,10 @@ var container= new Vue({
 		}
 	},
 	data:{
-		sex: 'male',
+		hometown: "beijing",
+		work: [],
+		article:"我认为还是佛is金佛生逢乱世舒服舒服就好",
+		sex: [],
 		name: "ff",
 		url:"http://readhub.me",
 		img: "http://g.hiphotos.baidu.com/image/h%3D300/sign=827213cf3afa828bce239be3cd1e41cd/0eb30f2442a7d933f6d973b9a44bd11372f00182.jpg",
