@@ -1,14 +1,10 @@
-var container= new Vue({
-	el: "#container",
-	components: {
-		'alert':{
-			template: '<button @click="on_click">贪贪贪</button>',
-			methods:{
-			on_click:function(){
-				alert('a');
-				}
-					}
-		}
-		
-	}		
-});
+var container = new Vue({
+	el:"#container",
+	component:{
+		template:"<button>点赞！！！</button>",
+		methods:function(){
+			return methods;
+		},
+
+	}
+})
