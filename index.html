@@ -4,20 +4,50 @@
 	<meta charset="UTF-8">
 	<title>vue-practise</title>
 	<style>
-		.card{
-			width: 200px;
-			background-color: #ccc;
-			padding: 30px;
-			margin: 20px auto;
+		.panel{
+			max-width: 300px;
+			border: 1px solid #999;
+			margin-bottom: 15px;
+		}
+		.panel >*{
+			padding: 15px;
+		}
+		.panel .title{
+			border-bottom: 1px solid #999;
+		}
+		.panel .footer{
+			border-top: 1px solid #999;
 		}
 	</style>
 </head>
 <body>
 	<div id="container">
-		<tooltip></tooltip>
-		<popup></popup>			
+		<panel>
+			<div slot="content">4356</div>
+			<div slot="title">3463674575756756785</div>
+		</panel>
+		<panel>
+			djhfgkhld
+		</panel>
+		<panel>
+			hgfdhfg
+		</panel>		
 	</div>
-
+	<template id="panel-tpl">
+		<div class="panel">
+		<div class="title">
+			<slot name="title"></slot>
+		</div>
+		<div class="content">
+			<slot name="content"></slot>
+		</div>
+		<div class="footer">
+			<slot name="footer">
+				更多信息
+			</slot>
+		</div>
+	</div>
+	</template>
 	<script type="text/javascript" src="lib/vue.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 </body>
