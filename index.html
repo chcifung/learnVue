@@ -11,9 +11,13 @@
 			<router-link to="/about">关于我们</router-link>
 			<router-link to="/user/wanghuahua">网花花</router-link>
 			<router-link to="/user/lishuandan">李栓但</router-link>
+			<router-link to="/user">用户管理</router-link>
+			<router-link to="/post">帖子管理</router-link>
+			<button @click="surf">漫游</button>
 		</div>
 		<div>
-			<router-view></router-view>
+			<router-view name='sidebar'>用户管理</router-view>
+			<router-view name='content'>帖子管理</router-view>
 		</div>
 	</div>
 	<script type="text/javascript" src="lib/vue.js"></script>

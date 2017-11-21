@@ -10,6 +10,48 @@ var routes = [
 		}
 	},
 	{
+		path:'/user',
+		components:{
+			sidebar:{
+				template:`
+				<div>
+					<ul>
+					<li>用户列表</li>
+					<li>权限管理</li>
+					</ul>
+				</div>
+
+				`
+			},
+			content:{
+				template:`
+				<div>啊那老大是哦对就是哦i附件是哦对房价</div>
+				`
+			}
+		}
+	},
+	{
+		path:'/post',
+		components:{
+			sidebar:{
+				template:`
+				<div>
+					<ul>
+					<li>帖子列表</li>
+					<li>标签管理</li>
+					</ul>
+				</div>
+
+				`
+			},
+			content:{
+				template:`
+				<div>啊那老大是哦对就是哦i附件是哦对房价</div>
+				`
+			}
+		}
+	},
+	{
 		path:'/about',
 		component:{
 			template:`
@@ -21,6 +63,7 @@ var routes = [
 	},
 	{
 		path:'/user/:name',
+		name: 'user',
 		component:{
 			template:`
 				<div>
@@ -54,4 +97,14 @@ var router = new VueRouter({
 new Vue({
 	el: "#container",
 	router : router,
+	methods:{
+		surf:function(){
+			setTimeout(function(){
+				this.router.push('/about');
+				setTimeout(function(){
+					this.router.push({name:'user',params:{name:'wanghuahua'}});
+				},1000);
+			},1000);
+		}
+	}
 })
