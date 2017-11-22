@@ -4,37 +4,27 @@ var routes = [
 		component:{
 			template:`
 				<div>
-					<h1>HOME</h1>
+					<h1>首页</h1>
 				</div>
 				`
 		}
 	},
 	{
-		path:'/user',
-		components:{
-			sidebar:{
-				template:`
+		path:'/login',
+		component:{
+			template:`
 				<div>
-					<ul>
-					<li>用户列表</li>
-					<li>权限管理</li>
-					</ul>
+					<h1>登录</h1>
+					<p>分公司对发生古风歌</p>
+					<input type="text">
 				</div>
-
 				`
-			},
-			content:{
-				template:`
-				<div>啊那老大是哦对就是哦i附件是哦对房价</div>
-				`
-			}
 		}
 	},
 	{
 		path:'/post',
-		components:{
-			sidebar:{
-				template:`
+		component:{
+			template:`
 				<div>
 					<ul>
 					<li>帖子列表</li>
@@ -44,55 +34,27 @@ var routes = [
 
 				`
 			},
-			content:{
-				template:`
-				<div>啊那老大是哦对就是哦i附件是哦对房价</div>
-				`
-			}
-		}
-	},
-	{
-		path:'/about',
-		component:{
-			template:`
-				<div>
-					<h1>About US</h1>
-				</div>
-				`
-		}
-	},
-	{
-		path:'/user/:name',
-		name: 'user',
-		component:{
-			template:`
-				<div>
-					<h1>大家好，我叫{{$route.params.name}}</h1>
-					<p>我今年{{$route.query.age}}岁了</p>
-					<router-link to="more" append>更多信息</router-link>
-					<router-view></router-view>
-				</div>
-				`
-		},
-		children: [
-		{
-			path:'more',
-			component:{
-				template:`
-					<div>
-					用户：{{$route.params.name}}的详细信息
-					饭还哦发货速度发货速度就发货速度加快和好的说法个电话关机的咖啡馆货到付款</div>
-				`
-			}
-		}
-		],
-	},
-	
+	},	
 ];
 
 var router = new VueRouter({
 	routes: routes,
 });
+
+router.beforeEach(function(to,form,next){
+	var logged_in = false;
+	if(!logged_in&&to.path=="/post"){
+		next('/login');
+	}else{
+		next();
+	}
+	
+});
+
+router.afterEach(function(to,from){
+	console.log(to);
+	console.log(from);
+})
 
 new Vue({
 	el: "#container",
