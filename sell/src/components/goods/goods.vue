@@ -2,7 +2,7 @@
 	<div class="goods">
 		<div class="menu-wrapper" ref="menuWrapper">
 			<ul>
-				<li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===(index-1)}" @click="selectMenu(index,$event)">
+				<li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)">
 					<span class="text border-1px">
 						<span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
 					</span>
@@ -14,7 +14,7 @@
 				<li v-for="item in goods" class="food-list food-list-hook">
 					<h1 class="title">{{item.name}}</h1>
 					<ul>
-						<li v-for="food in item.foods" class="food-item">
+						<li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item">
 							<div class="icon">
 								<img :src="food.icon">
 							</div>
@@ -28,17 +28,26 @@
 								<div class="price">
 									<span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
 								</div>
+								<div class="cartcontrol-wrapper">
+									<cartcontrol :food="food"></cartcontrol>
+								</div>
 							</div>
+
 						</li>
 					</ul>
 				</li>
 			</ul>
 		</div>
+		<shopcart ref="shopcart" :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+		<food :food="selectedFood" ref="food"></food>
 	</div>	
 </template>
 
 <script type="text/ecmascript-6">
 	import BScroll from 'better-scroll';
+	import shopcart from 'components/shopcart/shopcart';
+	import cartcontrol from 'components/cartcontrol/cartcontrol';
+	import food from 'components/food/food';
 	const ERR_OK = 0;
 
 	export default {
@@ -51,7 +60,8 @@
 			return {
 				goods: [],
 				listHeight: [],
-				scrollY: 0
+				scrollY: 0,
+				selectedFood: {}
 			};
 		},
 		created() {
@@ -77,14 +87,32 @@
 					};
 				};
 				return 0;
+			},
+			selectFoods() {
+				let foods = [];
+				this.goods.forEach((good) => {
+					good.foods.forEach((food) => {
+						if (food.count) {
+							foods.push(food);
+						}
+					});
+				});
+				return foods;
 			}
 		},
 		methods: {
+			_drop(target) {
+				// 体验优化 异步执行下落动画
+				this.$.nextTick(() => {
+					this.$refs.shopcart.drop(target);
+				});
+			},
 			_initScroll() {
 				this.menuScroll = new BScroll(this.$refs.menuWrapper, {
 					click: true
 				});
 				this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+					click: true,
 					probeType: 3
 				});
 
@@ -109,6 +137,23 @@
 				let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
 				let el = foodList[index];
 				this.foodsScroll.scrollToElement(el, 300);
+			},
+			selectFood(food, event) {
+				if (!event._constructed) {
+					return;
+				}
+				this.selectedFood = food;
+				this.$refs.food.show();
+			}
+		},
+		components: {
+			shopcart,
+			cartcontrol,
+			food
+		},
+		events: {
+			'cart.add'(target) {
+				this._drop(target);
 			}
 		}
 	};
@@ -214,4 +259,10 @@
 							text-decoration: line-through
 							font-size: 10px
 							color: rgb(147,153,159)										
+					.cartcontrol-wrapper
+						position: absolute
+						right: 0
+						bottom: 12px
+						
+						
 </style>
